@@ -1,6 +1,6 @@
-FROM nginx:latest
+FROM nginx:alpine
 
-RUN apt-get update && apt-get install -y apache2-utils gettext && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache nginx-mod-http-dav-ext apache2-utils gettext
 
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
 
