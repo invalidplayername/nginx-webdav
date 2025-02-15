@@ -1,0 +1,17 @@
+on: [push]
+jobs:
+  build_and_push:
+    runs-on: [docker]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Registry
+        run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login "${{ vars.DOCKER_REGISTRY_URL }}" --username "${{ vars.DOCKER_REGISTRY_USERNAME }}" --password-stdin
+
+      - name: Build Docker Image
+        run: docker build -t ${{ vars.DOCKER_REGISTRY_URL }}/basti/nginx-webdav:latest .
+
+      - name: Push Docker Image
+        run: docker push ${{ vars.DOCKER_REGISTRY_URL }}/basti/nginx-webdav:latest
