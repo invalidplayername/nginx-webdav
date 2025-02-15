@@ -1,0 +1,17 @@
+---
+services:
+  webdav:
+    build: .
+    container_name: nginx-webdav
+    restart: unless-stopped
+    ports:
+      - "8888:80"
+    environment:
+      - WEBDAV_USERNAME=webdavuser
+      - WEBDAV_PASSWORD=securepassword
+      - WEBDAV_UID=1000
+      - WEBDAV_GID=1000
+      - WEBDAV_MAX_BODY_SIZE=5G
+      - WEBDAV_TIMEOUT=1200s
+    volumes:
+      - ./webdav:/var/www/webdav
